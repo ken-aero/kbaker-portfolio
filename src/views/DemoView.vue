@@ -1,6 +1,6 @@
 <template>
   <div class="demo">
-    <teleport to="#modals" v-if="showModalTwo" :posts="posts">
+    <teleport to="#modals" v-if="showModal" :posts="posts">
       <Modal @close="toggleModalTwo">
         <h1>Submission</h1>
         <p>Email: {{ email }}</p>
@@ -62,16 +62,12 @@ export default {
       interests: [],
       tempInterest: '',
       passwordErr: null,
-      showModalTwo: false,
+      showModal: false,
       interestString: '',
     }
   },
   methods: {
-    toggleModalTwo() {
-      this.showModalTwo = !this.showModalTwo
-    },
     addInterest($event) {
-      console.log($event.key)
       if ($event.key === 'Control' && this.tempInterest) {
         if (!this.interests.includes(this.tempInterest)) {
           this.interests.push(this.tempInterest)
@@ -89,8 +85,6 @@ export default {
       this.passwordErr =
         this.password.length >= 5 ? '' : 'Password must be at least 5 characters'
 
-      console.log(this.passwordErr)
-
       let strText = ''
       let counter = 0
 
@@ -105,13 +99,12 @@ export default {
           }
         }
         this.interestString = strText
-        // make request to database to save user
         console.log('email: ', this.email)
         console.log('password: ', this.password)
         console.log('role: ', this.role)
         console.log('interests: ', this.interests)
         console.log('terms accepted: ', this.privacy)
-        this.showModalTwo = !this.showModalTwo
+        this.showModal = !this.showModal
       }
     },
   },
